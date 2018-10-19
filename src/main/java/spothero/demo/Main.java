@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.net.URI;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
 
+    public static void main(String[] args) throws IOException {
         String BASE_URI = "http://0.0.0.0:8080/pricing/";
         ServiceLocator locator = ServiceLocatorUtilities.createAndPopulateServiceLocator();
 

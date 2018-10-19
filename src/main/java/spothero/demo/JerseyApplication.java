@@ -11,7 +11,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class JerseyApplication extends ResourceConfig {
     public JerseyApplication() {
 
-        packages("spothero.demo");
+        packages("spothero.demo", "spothero.demo.api", "spothero.demo.model");
 
         JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
         jacksonJaxbJsonProvider.setMapper(buildObjectMapper());
