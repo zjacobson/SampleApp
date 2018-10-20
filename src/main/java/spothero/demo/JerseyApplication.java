@@ -1,21 +1,17 @@
 package spothero.demo;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jaxrs.Jaxrs2TypesModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 class JerseyApplication extends ResourceConfig {
     JerseyApplication() {
 
         packages("spothero.demo", "spothero.demo.api", "spothero.demo.model");
-
-        JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
-        jacksonJaxbJsonProvider.setMapper(buildObjectMapper());
-        register(jacksonJaxbJsonProvider);
+        register(LoggingFeature.class);
+//        JacksonJaxbJsonProvider jacksonJaxbJsonProvider = new JacksonJaxbJsonProvider();
+//        jacksonJaxbJsonProvider.setMapper(buildObjectMapper());
+//        register(jacksonJaxbJsonProvider);
         register(new AbstractBinder() {
             @Override
             protected void configure() {
@@ -31,11 +27,11 @@ class JerseyApplication extends ResourceConfig {
         });
     }
 
-    private ObjectMapper buildObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new Jaxrs2TypesModule());
-        mapper.registerModule(new ParameterNamesModule());
-        mapper.registerModule(new JavaTimeModule());
-        return mapper;
-    }
+//    private ObjectMapper buildObjectMapper() {
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.registerModule(new Jaxrs2TypesModule());
+//        mapper.registerModule(new ParameterNamesModule());
+//        mapper.registerModule(new JavaTimeModule());
+//        return mapper;
+//    }
 }
