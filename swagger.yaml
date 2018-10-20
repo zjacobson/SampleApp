@@ -1,0 +1,55 @@
+swagger: "2.0"
+info:
+  description: "Parking cost estimator"
+  version: "1.0.0"
+  title: "pricing"
+  termsOfService: "https://github.com/zjacobson/SampleApp/wiki/Terms"
+  contact:
+    email: "jacobsonz@gmail.com"
+  license:
+    name: "DO NOT COPY"
+    url: "https://github.com/zjacobson/SampleApp/wiki/Terms"
+host: "localhost:8080"
+basePath: "/spothero"
+tags:
+- name: "hello"
+  description: "Say hello"
+
+schemes:
+- "http"
+paths:
+  /hello:
+    get:
+      tags:
+      - "hello"
+      summary: "say hello to the world"
+      description: ""
+      operationId: "helloWorld"
+      produces:
+      - "text/plain"
+      responses:
+        200:
+          description: "Successful greeting"
+          schema:
+            type:
+              string
+  /greeting:
+    get:
+        tags:
+        - "hello"
+        summary: "Say hello in JSON"
+        operationId: "greeting"
+        produces:
+        - "application/json"
+        responses:
+          200:
+            description: "JSON Greeting"
+            schema:
+              $ref: "#/definitions/Greeting"
+
+definitions:
+  Greeting:
+    type: object
+    properties:
+      response:
+        type: string
