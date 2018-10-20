@@ -12,6 +12,9 @@ class ParkingComputer {
     }
 
     String compute() {
-        return null;
+        if (rates.hasRates()) {
+            return "1";
+        }
+        return "0";
     }
 }

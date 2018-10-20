@@ -138,6 +138,6 @@ dependencies {
 
     runtime 'com.squareup.okhttp:okhttp:2.7.5'
     runtime 'com.squareup.okhttp:logging-interceptor:2.7.5'
-    runtime "com.google.code.gson:gson:$gson_version"
+    compile "com.google.code.gson:gson:$gson_version"
     runtime "io.gsonfire:gson-fire:$gson_fire_version"
 }
