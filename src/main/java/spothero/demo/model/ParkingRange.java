@@ -2,6 +2,8 @@ package spothero.demo.model;
 
 import lombok.Data;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
@@ -11,16 +13,22 @@ public class ParkingRange {
     private final String end;
 
     public Day startDay() {
-
-        int dayOfWeek = toDateTime(start).getDayOfWeek();
-        return Day.from(dayOfWeek);
+        return Day.from(toDateTime(start).getDayOfWeek());
     }
 
-    public Day endDay() {
-        return Day.mon;
+    Day endDay() {
+        return Day.from(toDateTime(end).getDayOfWeek());
     }
 
     DateTime toDateTime(String iso8601) {
-        return DateTime.parse(iso8601, ISODateTimeFormat.dateTimeNoMillis());
+        return DateTime.parse(iso8601, ISODateTimeFormat.dateTimeNoMillis()).toDateTime(DateTimeZone.UTC);
+    }
+
+    public LocalTime startTime() {
+        return toDateTime(start).toLocalTime();
+    }
+
+    public LocalTime endTime() {
+        return toDateTime(end).toLocalTime();
     }
 }

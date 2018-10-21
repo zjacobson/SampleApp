@@ -21,7 +21,14 @@ public class IntegrationTest {
     public void testcase1() {
         range = new ParkingRange("2015-07-01T07:00:00Z", "2015-07-01T12:00:00Z");
         ParkingComputer computer = new ParkingComputer(rates, range);
-        assertEquals("1500", computer.compute());
+        assertEquals("1750", computer.compute());
+    }
+
+    @Test
+    public void testcase2() {
+        range = new ParkingRange("2015-07-01T02:00:00Z", "2015-07-01T03:00:00Z");
+        ParkingComputer computer = new ParkingComputer(rates, range);
+        assertEquals("1000", computer.compute());
     }
 
 

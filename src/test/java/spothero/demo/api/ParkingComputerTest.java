@@ -29,18 +29,13 @@ public class ParkingComputerTest {
     }
 
 
-    @Test
-    public void testBasic() {
-        assertEquals("0", computer.compute());
-    }
 
     @Test
     public void testRangeInRate() {
         // 2015-07-01T07:00:00Z (Wed) to 2015-07-01T12:00:00Z should yield 1500
-        when(range.getStart()).thenReturn("2015-07-01T07:00:00Z");
-        when(range.getEnd()).thenReturn("2015-07-01T12:00:00Z");
+        when(range.startTime()).thenReturn(LocalTime.parse("7:00:00"));
+        when(range.endTime()).thenReturn(LocalTime.parse("12:00:00"));
         Rate rate = new Rate("mon,tues,wed,thurs", "0600-1300", "1500");
-        when(rates.getRates()).thenReturn(Collections.singletonList(rate));
 
         boolean inRate = computer.rangeInRate(rate);
         assertTrue(inRate);

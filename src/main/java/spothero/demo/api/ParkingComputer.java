@@ -6,6 +6,7 @@ import spothero.demo.model.Day;
 import spothero.demo.model.ParkingRange;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 class ParkingComputer {
@@ -19,9 +20,9 @@ class ParkingComputer {
 
     String compute() {
 
-        ratesForDay(range.startDay()).stream().filter(this::rangeInRate);
-        if (rates.hasRates()) {
-            return "1";
+        Optional<ParkingRates.Rate> rate = ratesForDay(range.startDay()).stream().filter(this::rangeInRate).findFirst();
+        if (rate.isPresent()) {
+            return rate.get().price;
         }
         return "0";
     }
@@ -29,14 +30,13 @@ class ParkingComputer {
     boolean rangeInRate(ParkingRates.Rate rate) {
         String times = rate.times;
         //start and end times need to be fully within the times string
-//        LocalTime rangeStart = range.startTime();
-//        LocalTime rangeEnd = range.endTime();
-//
-//        LocalTime rateStart = getStartTime(times);
-//        LocalTime rateEnd = getEndTime(times);
+        LocalTime rangeStart = range.startTime();
+        LocalTime rangeEnd = range.endTime();
 
-//        return rangeStart.isAfter(rateStart) && rangeEnd.isBefore(rateEnd);
-        return false;
+        LocalTime rateStart = getStartTime(times);
+        LocalTime rateEnd = getEndTime(times);
+
+        return rangeStart.isAfter(rateStart) && rangeEnd.isBefore(rateEnd);
     }
 
 

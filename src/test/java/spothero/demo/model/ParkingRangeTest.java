@@ -16,9 +16,9 @@ public class ParkingRangeTest {
 
     @Test
     public void testEndDay() {
-        String end = "2018-19-20T20:00:00Z"; // (Sat)
+        String end = "2018-10-20T20:00:00Z"; // (Sat)
         ParkingRange range = new ParkingRange(null, end);
 
-        assertEquals(Day.mon, range.endDay());
+        assertEquals(Day.sat, range.endDay());
     }
 }
