@@ -1,7 +1,9 @@
 package spothero.demo.api;
 
 import com.google.gson.GsonBuilder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -18,6 +20,8 @@ class ParkingRates {
         return rates != null && !rates.isEmpty();
     }
 
+    @NoArgsConstructor
+    @AllArgsConstructor
     static class Rate {
 
         String days;
