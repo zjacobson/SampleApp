@@ -28,10 +28,6 @@ public class ParkingComputerTest {
         assertEquals("0", computer.compute());
     }
 
-    @Test
-    public void testNoRatesFoundForRange() {
-        when(rates.hasRates()).thenReturn(true);
-        assertEquals("1", computer.compute());
-    }
+
 
 }

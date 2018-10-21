@@ -50,10 +50,11 @@ Sample result:
 Datetime ranges should be specified in isoformat.  A rate must completely encapsulate a datetime range for it to be available.
 
 Rates will never overlap.
-
+```
 2015-07-01T07:00:00Z (Wed) to 2015-07-01T12:00:00Z should yield 1500
 2015-07-04T07:00:00Z (Sat) to 2015-07-04T12:00:00Z should yield 2000
 2015-07-04T07:00:00Z (Sat) to 2015-07-04T20:00:00Z should yield unavailable
+```
  
 Sample JSON for testing
 ```json
