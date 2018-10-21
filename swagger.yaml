@@ -1,55 +1,155 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: "Parking cost estimator"
-  version: "1.0.0"
-  title: "pricing"
-  termsOfService: "https://github.com/zjacobson/SampleApp/wiki/Terms"
-  contact:
-    email: "jacobsonz@gmail.com"
-  license:
-    name: "DO NOT COPY"
-    url: "https://github.com/zjacobson/SampleApp/wiki/Terms"
-host: "localhost:8080"
-basePath: "/spothero"
-tags:
-- name: "hello"
-  description: "Say hello"
-
+  version: '1.0'
+  title: spothero
+  description: "# Introduction\nAPI that allows a user to provide a date time range and get back the rate at which they would be charged to park for that time span. \nIf the date range spans more than one day, the rate is _Unavailable_.\nParking rates can not overlap"
+  contact: {}
+host: localhost:8080
+basePath: /pricing
 schemes:
-- "http"
+- http
+consumes:
+- application/json
+produces:
+- application/json
 paths:
-  /hello:
+  /park:
     get:
-      tags:
-      - "hello"
-      summary: "say hello to the world"
-      description: ""
-      operationId: "helloWorld"
+      description: Get the pricing for a single day using the embedded rates.
+      summary: park
+      operationId: ParkGet
       produces:
-      - "text/plain"
+      - application/json
+      - application/xml
+      parameters:
+      - name: start
+        in: query
+        required: true
+        type: string
+        format: date-time
+        description: ''
+      - name: end
+        in: query
+        required: true
+        type: string
+        format: date-time
+        description: ''
+      - name: Accepts
+        in: header
+        required: true
+        type: string
+        description: ''
       responses:
         200:
-          description: "Successful greeting"
-          schema:
-            type:
-              string
-  /greeting:
-    get:
-        tags:
-        - "hello"
-        summary: "Say hello in JSON"
-        operationId: "greeting"
-        produces:
-        - "application/json"
-        responses:
-          200:
-            description: "JSON Greeting"
-            schema:
-              $ref: "#/definitions/Greeting"
-
+          description: ''
+    post:
+      description: Get the pricing for a time range on a single day using the provided rates
+      summary: park (with rates)
+      operationId: ParkPost
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: start
+        in: query
+        required: true
+        type: string
+        format: date-time
+        description: ''
+      - name: end
+        in: query
+        required: true
+        type: string
+        format: date-time
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Park(withRates)request'
+      - name: Accepts
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+      security: []
 definitions:
-  Greeting:
+  Park(withRates)request:
+    title: park (with rates)Request
+    example:
+      rates:
+      - days: mon,tues,thurs
+        times: 0900-2100
+        price: 1500
+      - days: fri,sat,sun
+        times: 0900-2100
+        price: 2500
+      - days: wed
+        times: 0600-1800
+        price: 1750
+      - days: mon,wed,sat
+        times: 0100-0500
+        price: 1000
+      - days: sun,tues
+        times: 0100-0700
+        price: 925
     type: object
     properties:
-      response:
+      rates:
+        description: ''
+        example:
+        - days: mon,tues,thurs
+          times: 0900-2100
+          price: 1500
+        - days: fri,sat,sun
+          times: 0900-2100
+          price: 2500
+        - days: wed
+          times: 0600-1800
+          price: 1750
+        - days: mon,wed,sat
+          times: 0100-0500
+          price: 1000
+        - days: sun,tues
+          times: 0100-0700
+          price: 925
+        type: array
+        items:
+          $ref: '#/definitions/Rate'
+    required:
+    - rates
+  Rate:
+    title: Rate
+    example:
+      days: mon,tues,thurs
+      times: 0900-2100
+      price: 1500
+    type: object
+    properties:
+      days:
+        description: ''
+        example: mon,tues,thurs
         type: string
+      times:
+        description: ''
+        example: 0900-2100
+        type: string
+      price:
+        description: ''
+        example: 1500
+        type: integer
+        format: int32
+    required:
+    - days
+    - times
+    - price
+tags: []
