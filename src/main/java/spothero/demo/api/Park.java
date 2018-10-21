@@ -7,7 +7,6 @@ import spothero.demo.model.Rate;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("park")
 public class Park {

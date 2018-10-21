@@ -1,7 +1,6 @@
 package spothero.demo.api;
 
 import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
 import spothero.demo.model.Day;
 import spothero.demo.model.ParkingRange;
 import spothero.demo.model.ParkingRates;
@@ -10,7 +9,6 @@ import spothero.demo.model.Rate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 class ParkingComputer {
     private final ParkingRates rates;
