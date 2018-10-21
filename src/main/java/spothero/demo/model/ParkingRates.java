@@ -1,37 +1,29 @@
-package spothero.demo.api;
+package spothero.demo.model;
 
 import com.google.gson.GsonBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
+@AllArgsConstructor
+public
 class ParkingRates {
-    static ParkingRates testData() {
+    List<Rate> rates;
+
+
+    public static ParkingRates testData() {
         return  new GsonBuilder().create().fromJson(ParkingRates.testData, ParkingRates.class);
     }
 
 
-    List<Rate> rates;
-
-    boolean hasRates() {
-        return rates != null && !rates.isEmpty();
+    public List<Rate> ratesForDay(Day startDay) {
+        return rates.stream().filter(rate -> rate.days.contains(startDay.name())).collect(Collectors.toList());
     }
 
-    @NoArgsConstructor
-    @AllArgsConstructor
-    static class Rate {
-
-        String days;
-        String times;
-        String price;
-    }
-
-
-
-    static String testData = "{" +
+    private static String testData = "{" +
             "    \"rates\": [" +
             "        {" +
             "            \"days\": \"mon,tues,thurs\"," +

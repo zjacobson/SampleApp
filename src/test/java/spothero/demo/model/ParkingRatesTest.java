@@ -1,7 +1,7 @@
-package spothero.demo.api;
+package spothero.demo.model;
 
-import com.google.gson.GsonBuilder;
 import org.junit.Test;
+import spothero.demo.model.ParkingRates;
 
 import static org.junit.Assert.*;
 

@@ -16,7 +16,7 @@ public class ParkingRange {
         return Day.from(toDateTime(start).getDayOfWeek());
     }
 
-    Day endDay() {
+    public Day endDay() {
         return Day.from(toDateTime(end).getDayOfWeek());
     }
 

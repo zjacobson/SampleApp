@@ -1,6 +1,8 @@
 package spothero.demo.api;
 
 import spothero.demo.model.ParkingRange;
+import spothero.demo.model.ParkingRates;
+import spothero.demo.model.Rate;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +20,15 @@ public class Park {
         ParkingRange range = new ParkingRange(startISO8601, end8601);
         ParkingRates rates = ParkingRates.testData();
         ParkingComputer computer = new ParkingComputer(rates, range);
-        return Response.status(javax.ws.rs.core.Response.Status.OK).entity(computer.compute()).build();
+        try {
+            Rate rate = computer.compute();
+            return Response.status(javax.ws.rs.core.Response.Status.OK).entity(rate).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(422, sanitize(e.getMessage())).entity(Rate.Unavailable).build();
+        }
+    }
+
+    private String sanitize(String message) {
+        return message;
     }
 }

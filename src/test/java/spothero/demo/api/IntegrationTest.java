@@ -3,13 +3,14 @@ package spothero.demo.api;
 import org.junit.Test;
 import spothero.demo.model.Day;
 import spothero.demo.model.ParkingRange;
+import spothero.demo.model.ParkingRates;
+import spothero.demo.model.Rate;
 
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.when;
 
 public class IntegrationTest {
 
@@ -34,25 +35,24 @@ public class IntegrationTest {
 
     @Test
     public void findRateForDay() {
-        ParkingRates.Rate monRate = new ParkingRates.Rate("mon", null, null);
-        rates = new ParkingRates();
-        rates.rates = Collections.singletonList(monRate);
+        Rate monRate = new Rate("mon", null, null);
+        rates = new ParkingRates(Collections.singletonList(monRate));
 
         ParkingComputer computer = new ParkingComputer(rates, range);
 
-        assertSame(monRate, computer.ratesForDay(Day.mon).get(0));
+        assertSame(monRate, computer.ratesForDay(Day.mon, range.endDay()).get(0));
     }
 
     @Test
     public void testRatesForDay_testData() {
         ParkingComputer computer = new ParkingComputer(rates, null);
 
-        List<ParkingRates.Rate> mondayRates = computer.ratesForDay(Day.mon);
+        List<Rate> mondayRates = computer.ratesForDay(Day.mon, range.endDay());
 
         assertEquals(2, mondayRates.size());
-        assertEquals("0900-2100", mondayRates.get(0).times);
-        assertEquals("1500", mondayRates.get(0).price);
-        assertEquals("0100-0500", mondayRates.get(1).times);
-        assertEquals("1000", mondayRates.get(1).price);
+        assertEquals("0900-2100", mondayRates.get(0).getTimes());
+        assertEquals("1500", mondayRates.get(0).getPrice());
+        assertEquals("0100-0500", mondayRates.get(1).getTimes());
+        assertEquals("1000", mondayRates.get(1).getPrice());
     }
 }

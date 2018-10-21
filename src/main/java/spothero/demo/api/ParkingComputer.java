@@ -4,7 +4,10 @@ import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import spothero.demo.model.Day;
 import spothero.demo.model.ParkingRange;
+import spothero.demo.model.ParkingRates;
+import spothero.demo.model.Rate;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,37 +21,31 @@ class ParkingComputer {
         this.range = range;
     }
 
-    String compute() {
+    Rate compute() {
 
-        Optional<ParkingRates.Rate> rate = ratesForDay(range.startDay()).stream().filter(this::rangeInRate).findFirst();
-        if (rate.isPresent()) {
-            return rate.get().price;
-        }
-        return "0";
+        Optional<Rate> rate = ratesForDay(range.startDay(), range.endDay()).stream().filter(this::rangeInRate).findFirst();
+        return rate.orElse(Rate.Unavailable);
     }
 
-    boolean rangeInRate(ParkingRates.Rate rate) {
-        String times = rate.times;
+    boolean rangeInRate(Rate rate) {
         //start and end times need to be fully within the times string
         LocalTime rangeStart = range.startTime();
         LocalTime rangeEnd = range.endTime();
 
-        LocalTime rateStart = getStartTime(times);
-        LocalTime rateEnd = getEndTime(times);
+        LocalTime rateStart = rate.getStartTime();
+        LocalTime rateEnd = rate.getEndTime();
 
         return rangeStart.isAfter(rateStart) && rangeEnd.isBefore(rateEnd);
     }
 
 
-    List<ParkingRates.Rate> ratesForDay(Day day) {
-        return rates.rates.stream().filter(rate -> rate.days.contains(day.name())).collect(Collectors.toList());
+    List<Rate> ratesForDay(Day startDay, Day endDay) {
+        if (startDay != endDay) {
+            return Collections.emptyList();
+
+        }
+        return rates.ratesForDay(startDay);
     }
 
-    LocalTime getStartTime(String timeRange) {
-        return LocalTime.parse(timeRange.substring(0, timeRange.indexOf("-")), DateTimeFormat.forPattern("HHmm"));
-    }
 
-    LocalTime getEndTime(String timeRange) {
-        return LocalTime.parse(timeRange.substring(timeRange.indexOf("-")+1), DateTimeFormat.forPattern("HHmm"));
-    }
 }

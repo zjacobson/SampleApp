@@ -6,11 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import spothero.demo.api.ParkingRates.Rate;
-import spothero.demo.model.Day;
+import spothero.demo.model.ParkingRates;
+import spothero.demo.model.Rate;
 import spothero.demo.model.ParkingRange;
-
-import java.util.Collections;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -39,18 +37,6 @@ public class ParkingComputerTest {
 
         boolean inRate = computer.rangeInRate(rate);
         assertTrue(inRate);
-    }
-
-    @Test
-    public void testGetStartTime() {
-        LocalTime time = computer.getStartTime("0200-1300");
-        assertEquals(2, time.getHourOfDay());
-    }
-
-    @Test
-    public void testGetEndTime() {
-        LocalTime time = computer.getEndTime("0200-1300");
-        assertEquals(13, time.getHourOfDay());
     }
 
 }

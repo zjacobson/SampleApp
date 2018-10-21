@@ -4,8 +4,8 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
-class JerseyApplication extends ResourceConfig {
-    JerseyApplication() {
+public class JerseyApplication extends ResourceConfig {
+    public JerseyApplication() {
 
         packages("spothero.demo", "spothero.demo.api", "spothero.demo.model");
         register(LoggingFeature.class);
