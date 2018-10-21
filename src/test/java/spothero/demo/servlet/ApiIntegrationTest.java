@@ -4,11 +4,16 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
 import spothero.demo.JerseyApplication;
+import spothero.demo.model.ParkingRates;
 import spothero.demo.model.Rate;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertEquals;
@@ -120,5 +125,22 @@ public class ApiIntegrationTest extends JerseyTest {
                 get();
 
         assertEquals("{\"days\":\"fri,sat,sun\",\"times\":\"0900-2100\",\"price\":\"2000\"}", response.readEntity(String.class));
+    }
+
+    @Test
+    public void postWithRates() {
+        List<Rate> rates = new ArrayList<>();
+        rates.add(new Rate("sat", "0959-1301", "700"));
+        ParkingRates parkingRates = new ParkingRates(rates);
+        Response response = target("/park").
+                queryParam("start", "2018-10-20T10:00:00Z").
+                queryParam("end", "2018-10-20T13:00:00Z").
+                request().
+                accept(MediaType.APPLICATION_JSON).
+                post(Entity.json(parkingRates));
+
+        assertEquals(200, response.getStatus());
+        Rate entity = response.readEntity(Rate.class);
+        assertEquals("700", entity.getPrice());
     }
 }
