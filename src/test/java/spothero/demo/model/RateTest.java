@@ -14,7 +14,7 @@ public class RateTest {
 
     @Test
     public void testGetEndTime() {
-        LocalTime time = new Rate("mon,tue", "0200-1300", "1245").getStartTime();
+        LocalTime time = new Rate("mon,tue", "0200-1300", "1245").getEndTime();
         assertEquals(13, time.getHourOfDay());
     }
 
