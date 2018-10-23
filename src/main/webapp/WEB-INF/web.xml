@@ -12,7 +12,7 @@
         <!-- Register resources and providers -->
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.jersey.series.xml.json.service</param-value>
+            <param-value>spothero.demo.api</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

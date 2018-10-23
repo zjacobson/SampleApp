@@ -12,19 +12,19 @@ public class ParkingRange {
     private final String end;
 
     public Day startDay() {
-        return Day.from(toDateTime(start).getDayOfWeek());
+        return Day.from(toDateTime(getStart()).getDayOfWeek());
     }
 
     public Day endDay() {
-        return Day.from(toDateTime(end).getDayOfWeek());
+        return Day.from(toDateTime(getEnd()).getDayOfWeek());
     }
 
     public LocalTime startTime() {
-        return toDateTime(start).toLocalTime();
+        return toDateTime(getStart()).toLocalTime();
     }
 
     public LocalTime endTime() {
-        return toDateTime(end).toLocalTime();
+        return toDateTime(getEnd()).toLocalTime();
     }
 
     private DateTime toDateTime(String iso8601) {
