@@ -14,15 +14,7 @@ public class Park {
     @GET
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response park(@QueryParam("start") String startISO8601, @QueryParam("end") String end8601 ) {
-        ParkingRange range = new ParkingRange(startISO8601, end8601);
-        ParkingRates rates = ParkingRates.testData();
-        ParkingComputer computer = new ParkingComputer(rates, range);
-        try {
-            Rate rate = computer.compute();
-            return Response.status(javax.ws.rs.core.Response.Status.OK).entity(rate).build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(422, sanitize(e.getMessage())).entity(Rate.Unavailable).build();
-        }
+        return parkGivenRates(startISO8601, end8601, ParkingRates.testData());
     }
 
     @POST
